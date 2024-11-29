@@ -8,6 +8,8 @@ function randint(min, max) {
 function App() {
   const [leaves, setLeaves] = useState([]);
   const [page, setPage] = useState(0);
+  const [isReached, setReached] = useState(0);
+
   const COLORS = [
     "#631601",
     "#da0001",
@@ -21,6 +23,12 @@ function App() {
     "#dda15e",
     "#bc6c25",
   ];
+
+  const bgColor = [
+    { cTop: "#de8c3c", cBottom: "#695140" },
+    { cTop: "#ffffff", cBottom: "#000000" },
+  ];
+
   useEffect(() => {
     const initialLeaves = Array.from({ length: 60 }, () => ({
       id: `leave-${nanoid()}`,
@@ -35,36 +43,45 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLeaves((prevLeaves) =>
-        prevLeaves.map((leaf) => {
-          const newPosY = leaf.posY + 1; // Déplace la feuille vers le bas
-          if (newPosY > window.innerHeight) {
-            // Si la feuille sort de l'écran, réinitialise sa position en haut
-            return {
-              ...leaf,
-              posY: 0,
-              posX: randint(0, window.innerWidth - 55),
-            };
-          }
-          return { ...leaf, posY: newPosY };
-        })
-      );
-    }, 10);
+    document
+      .querySelector(":root")
+      .style.setProperty("--cTop", bgColor[isReached].cTop);
+    document
+      .querySelector(":root")
+      .style.setProperty("--cBottom", bgColor[isReached].cBottom);
+
+    if (!isReached) {
+      const interval = setInterval(() => {
+        setLeaves((prevLeaves) =>
+          prevLeaves.map((leaf) => {
+            const newPosY = leaf.posY + 1; // Déplace la feuille vers le bas
+            if (newPosY > window.innerHeight) {
+              // Si la feuille sort de l'écran, réinitialise sa position en haut
+              return {
+                ...leaf,
+                posY: 0,
+                posX: randint(0, window.innerWidth - 55),
+              };
+            }
+            return { ...leaf, posY: newPosY };
+          })
+        );
+      }, 10);
+    }
 
     return () => clearInterval(interval);
   }, []);
 
   const PAGES = [
     <div className="content">
-      <h1 id="p1">Une petite surprise pour toi...</h1>
+      <h3 id="p1">Une petite surprise pour toi...</h3>
       <img src="/arrow-down.png" />
       <p id="answer" onClick={() => setPage(1)}>
         Découvrir la suite
       </p>
     </div>,
     <div className="content">
-      <h1>Un petit jeu</h1>
+      <h3>Un petit jeu</h3>
       <p>Réponds à cette question pour découvrir la suite</p>
       <p id="answer" onClick={() => setPage(2)}>
         Je suis prête
@@ -73,7 +90,36 @@ function App() {
     <div className="content">
       <h3>Sais-tu pourquoi cette page ?</h3>
       <div className="multiple">
+        <p id="answer" onClick={() => setPage(4)}>
+          Oui
+        </p>
         <p id="answer" onClick={() => setPage(3)}>
+          Non
+        </p>
+      </div>
+    </div>,
+    <div className="content">
+      <h3>Tu veux savoir pourquoi ?</h3>
+      <div className="multiple">
+        <p id="answer" onClick={() => setPage(4)}>
+          Oui
+        </p>
+        <p id="answer" onClick={() => setPage(5)}>
+          Non
+        </p>
+      </div>
+    </div>,
+    <div className="content">
+      <h3 id="p1">Cool, la suite est ici</h3>
+      <img src="/arrow-down.png" />
+      <p onClick={() => setReached(1)} id="answer">
+        Suite {">>"}
+      </p>
+    </div>,
+    <div className="content">
+      <h3>Tu es sûre ?</h3>
+      <div className="multiple">
+        <p id="answer" onClick={() => setPage(6)}>
           Oui
         </p>
         <p id="answer" onClick={() => setPage(4)}>
@@ -81,10 +127,13 @@ function App() {
         </p>
       </div>
     </div>,
+    <div className="content">
+      <h3>Tant pis...</h3>
+    </div>,
   ];
 
-  return (
-    <main>
+  return !isReached ? (
+    <main className="not-reached">
       {leaves.map((l) => (
         <span
           className="leaf"
@@ -103,6 +152,8 @@ function App() {
       ))}
       {PAGES[page]}
     </main>
+  ) : (
+    <main className="reached"></main>
   );
 }
 
