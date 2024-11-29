@@ -32,4 +32,12 @@ main {
   z-index: 99;
   background-color: rgba(0, 0, 0, .3);
   backdrop-filter: blur(8px);
+  color: whitesmoke;
+  #p1 {
+    margin-bottom: 100px;
+  }
+  img {
+    width: 50px;
+    margin-bottom: 50px;
+  }
 }

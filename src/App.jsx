@@ -7,6 +7,7 @@ function randint(min, max) {
 
 function App() {
   const [leaves, setLeaves] = useState([]);
+  const [page, setPage] = useState(0);
   const COLORS = [
     "#631601",
     "#da0001",
@@ -54,6 +55,15 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const PAGES = [
+    <div className="content">
+      <h1 id="p1">Une petite surprise pour toi...</h1>
+      <img src="/arrow-down.png" />
+      <p onClick={() => setPage(1)}>Découvrir la suite</p>
+    </div>,
+    <div className="content">Hello</div>,
+  ];
+
   return (
     <main>
       {leaves.map((l) => (
@@ -72,9 +82,7 @@ function App() {
           {" "}
         </span>
       ))}
-      <div className="content">
-        <h1>Hello</h1>
-      </div>
+      {PAGES[page]}
     </main>
   );
 }
