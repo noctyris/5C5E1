@@ -1,9 +1,12 @@
 html {
   height: 100%;
+  font-family: "Montserrat", sans-serif;
+  overflow: hidden;
 }
 body {
   padding: 0;
-  background: fixed linear-gradient(to bottom, #de8c3c, #695140) center no-repeat;
+  background: fixed linear-gradient(to bottom, #de8c3c, #695140) center
+    no-repeat;
   background-size: cover;
 }
 main {
@@ -13,9 +16,20 @@ main {
   gap: 10px;
 }
 
-
 .leaf {
   width: 50px;
   height: 50px;
   position: absolute;
+}
+
+.content {
+  margin: 30px auto;
+  border: whitesmoke 2px solid;
+  padding: 20px;
+  border-radius: 40px;
+  width: 80%;
+  text-align: center;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, .3);
+  backdrop-filter: blur(4px);
 }
