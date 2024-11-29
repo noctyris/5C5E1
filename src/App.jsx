@@ -59,9 +59,28 @@ function App() {
     <div className="content">
       <h1 id="p1">Une petite surprise pour toi...</h1>
       <img src="/arrow-down.png" />
-      <p onClick={() => setPage(1)}>Découvrir la suite</p>
+      <p id="answer" onClick={() => setPage(1)}>
+        Découvrir la suite
+      </p>
     </div>,
-    <div className="content">Hello</div>,
+    <div className="content">
+      <h1>Un petit jeu</h1>
+      <p>Réponds à cette question pour découvrir la suite</p>
+      <p id="answer" onClick={() => setPage(2)}>
+        Je suis prête
+      </p>
+    </div>,
+    <div className="content">
+      <h3>Sais-tu pourquoi cette page ?</h3>
+      <div className="multiple">
+        <p id="answer" onClick={() => setPage(3)}>
+          Oui
+        </p>
+        <p id="answer" onClick={() => setPage(4)}>
+          Non
+        </p>
+      </div>
+    </div>,
   ];
 
   return (
