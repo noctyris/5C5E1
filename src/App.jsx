@@ -21,7 +21,7 @@ function App() {
     "#bc6c25",
   ];
   useEffect(() => {
-    const initialLeaves = Array.from({ length: 100 }, () => ({
+    const initialLeaves = Array.from({ length: 60 }, () => ({
       id: `leave-${nanoid()}`,
       posX: randint(-55, window.innerWidth - 55),
       posY: randint(-55, window.innerHeight - 55),
@@ -37,7 +37,7 @@ function App() {
     const interval = setInterval(() => {
       setLeaves((prevLeaves) =>
         prevLeaves.map((leaf) => {
-          const newPosY = leaf.posY + 2; // Déplace la feuille vers le bas
+          const newPosY = leaf.posY + 1; // Déplace la feuille vers le bas
           if (newPosY > window.innerHeight) {
             // Si la feuille sort de l'écran, réinitialise sa position en haut
             return {
@@ -49,7 +49,7 @@ function App() {
           return { ...leaf, posY: newPosY };
         })
       );
-    }, 1);
+    }, 10);
 
     return () => clearInterval(interval);
   }, []);
