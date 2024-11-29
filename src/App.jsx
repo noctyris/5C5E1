@@ -49,7 +49,7 @@ function App() {
           return { ...leaf, posY: newPosY };
         })
       );
-    }, 5);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
@@ -72,6 +72,9 @@ function App() {
           {" "}
         </span>
       ))}
+      <div className="content">
+        <h1>Hello</h1>
+      </div>
     </main>
   );
 }
