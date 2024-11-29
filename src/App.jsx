@@ -49,7 +49,7 @@ function App() {
           return { ...leaf, posY: newPosY };
         })
       );
-    }, 1000);
+    }, 1);
 
     return () => clearInterval(interval);
   }, []);
