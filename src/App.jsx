@@ -1,49 +1,79 @@
-import { useState } from "react";
-import Tokenizer from "./components/Tokenizer";
+import React, { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 
-const azertyTable =
-  "azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN1234567890&é\"'(-è_çà)=~#{[|`^@]}$*ù!,:;/.?<>";
-const decodeToken = (token) =>
-  token
-    .split("")
-    .map(
-      (c, i) =>
-        azertyTable[
-          (azertyTable.indexOf(c) -
-            azertyTable.indexOf("_3lEn@~<3_"[i]) +
-            azertyTable.length) %
-            azertyTable.length
-        ]
-    )
-    .join("");
-
-const validateToken = (token) => {
-  if (!token || token.length !== 10) return false;
-
-  const decodedDate = decodeToken(token);
-  const hour = decodedDate.slice(0, 4);
-  const date = decodedDate.slice(4);
-
-  const currentDate = [
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    new Date().getDate(),
-  ].join("");
-  const currentHour = [new Date().getHours(), new Date().getMinutes()].join("");
-
-  return currentDate <= date ? currentHour <= hour : true;
-};
+function randint(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function App() {
-  const queryParams = new URLSearchParams(window.location.search);
-  const token = queryParams.get("token");
-  const devParam = queryParams.get("p");
-  const isTokenValid = validateToken(token);
+  const [leaves, setLeaves] = useState([]);
+  const COLORS = [
+    "#631601",
+    "#da0001",
+    "#db4901",
+    "#b25600",
+    "#f78701",
+    "#ffc502",
+    "#606C38",
+    "#283618",
+    "#fefae0",
+    "#dda15e",
+    "#bc6c25",
+  ];
+  useEffect(() => {
+    const initialLeaves = Array.from({ length: 100 }, () => ({
+      id: `leave-${nanoid()}`,
+      posX: randint(-55, window.innerWidth - 55),
+      posY: randint(-55, window.innerHeight - 55),
+      shape: randint(70, 100),
+      orientation: randint(0, 360),
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    }));
 
-  const invalidTokenView = <div className="container"><h1>Le token est invalide ou expiré</h1></div>;
-  const validTokenView = <div className="container"><h1>Token valide</h1></div>
+    setLeaves(initialLeaves);
+  }, []);
 
-  return <div>{devParam !== "dev" ? <Tokenizer /> : ""}{isTokenValid ? validTokenView : invalidTokenView}</div>;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLeaves((prevLeaves) =>
+        prevLeaves.map((leaf) => {
+          const newPosY = leaf.posY + 2; // Déplace la feuille vers le bas
+          if (newPosY > window.innerHeight) {
+            // Si la feuille sort de l'écran, réinitialise sa position en haut
+            return {
+              ...leaf,
+              posY: 0,
+              posX: randint(0, window.innerWidth - 55),
+            };
+          }
+          return { ...leaf, posY: newPosY };
+        })
+      );
+    }, 5);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <main>
+      {leaves.map((l) => (
+        <span
+          className="leaf"
+          style={{
+            backgroundColor: l.color,
+            color: l.color,
+            borderRadius: `0 ${l.shape}px`,
+            top: l.posY,
+            left: l.posX,
+            transform: `rotate(${l.orientation}deg)`,
+          }}
+          key={l.id}
+        >
+          {" "}
+        </span>
+      ))}
+    </main>
+  );
 }
 
 export default App;
