@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import UnreachedPage from "./components/UnreachedPages";
 import { nanoid } from "nanoid";
 
 function randint(min, max) {
@@ -8,7 +9,10 @@ function randint(min, max) {
 function App() {
   const [leaves, setLeaves] = useState([]);
   const [page, setPage] = useState(0);
-  const [isReached, setReached] = useState(0);
+  const [isReached, setReached] = useState(false);
+  const [passwordValue, setPasswordValue] = useState("");
+
+  const PASSWORD = "cUt3qsqJ";
 
   const COLORS = [
     "#631601",
@@ -22,11 +26,6 @@ function App() {
     "#fefae0",
     "#dda15e",
     "#bc6c25",
-  ];
-
-  const bgColor = [
-    { cTop: "#de8c3c", cBottom: "#695140" },
-    { cTop: "#ffffff", cBottom: "#000000" },
   ];
 
   useEffect(() => {
@@ -43,20 +42,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    document
-      .querySelector(":root")
-      .style.setProperty("--cTop", bgColor[isReached].cTop);
-    document
-      .querySelector(":root")
-      .style.setProperty("--cBottom", bgColor[isReached].cBottom);
-
     if (!isReached) {
       const interval = setInterval(() => {
         setLeaves((prevLeaves) =>
           prevLeaves.map((leaf) => {
-            const newPosY = leaf.posY + 1; // Déplace la feuille vers le bas
+            const newPosY = leaf.posY + 1;
             if (newPosY > window.innerHeight) {
-              // Si la feuille sort de l'écran, réinitialise sa position en haut
               return {
                 ...leaf,
                 posY: 0,
@@ -67,69 +58,37 @@ function App() {
           })
         );
       }, 10);
+      return () => clearInterval(interval);
     }
-
-    return () => clearInterval(interval);
   }, []);
 
-  const PAGES = [
+  function copy() {
+    navigator.clipboard.writeText("Y1V0M3FzcUo=");
+    alert("Copié");
+  }
+
+  function handleChange(e) {
+    setPasswordValue(e.target.value);
+  }
+
+  const REACHED_PAGES = [
     <div className="content">
-      <h3 id="p1">Une petite surprise pour toi...</h3>
+      <h3>Pour accéder au site, trouve le mot de passe :</h3>
+      <p>Crypté: </p>
+      <p onClick={() => copy()}>
+        <code>Y1V0M3FzcUo=</code>
+      </p>
       <img src="/arrow-down.png" />
-      <p id="answer" onClick={() => setPage(1)}>
-        Découvrir la suite
-      </p>
+        <input
+          type="password"
+          id="password"
+          value={passwordValue}
+          onChange={handleChange}
+          style={{boxShadow: (passwordValue === PASSWORD) ? "0 0 30px #00ff00" : "none"}}
+        />
+      {(passwordValue === PASSWORD) ? <button onClick={() => setPage(1)}>Go</button> : ""}
     </div>,
-    <div className="content">
-      <h3>Un petit jeu</h3>
-      <p>Réponds à cette question pour découvrir la suite</p>
-      <p id="answer" onClick={() => setPage(2)}>
-        Je suis prête
-      </p>
-    </div>,
-    <div className="content">
-      <h3>Sais-tu pourquoi cette page ?</h3>
-      <div className="multiple">
-        <p id="answer" onClick={() => setPage(4)}>
-          Oui
-        </p>
-        <p id="answer" onClick={() => setPage(3)}>
-          Non
-        </p>
-      </div>
-    </div>,
-    <div className="content">
-      <h3>Tu veux savoir pourquoi ?</h3>
-      <div className="multiple">
-        <p id="answer" onClick={() => setPage(4)}>
-          Oui
-        </p>
-        <p id="answer" onClick={() => setPage(5)}>
-          Non
-        </p>
-      </div>
-    </div>,
-    <div className="content">
-      <h3 id="p1">Cool, la suite est ici</h3>
-      <img src="/arrow-down.png" />
-      <p onClick={() => setReached(1)} id="answer">
-        Suite {">>"}
-      </p>
-    </div>,
-    <div className="content">
-      <h3>Tu es sûre ?</h3>
-      <div className="multiple">
-        <p id="answer" onClick={() => setPage(6)}>
-          Oui
-        </p>
-        <p id="answer" onClick={() => setPage(4)}>
-          Non
-        </p>
-      </div>
-    </div>,
-    <div className="content">
-      <h3>Tant pis...</h3>
-    </div>,
+    <div className="content">Hello</div>
   ];
 
   return !isReached ? (
@@ -150,10 +109,10 @@ function App() {
           {" "}
         </span>
       ))}
-      {PAGES[page]}
+      <UnreachedPage n={page} setPage={setPage} setReached={setReached} />
     </main>
   ) : (
-    <main className="reached"></main>
+    <main className="reached">{REACHED_PAGES[page]}</main>
   );
 }
 

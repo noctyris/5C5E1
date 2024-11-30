@@ -5,54 +5,110 @@ html {
 }
 body {
   padding: 0;
-  background: fixed linear-gradient(to bottom, var(--cTop), var(--cBottom)) center
+}
+img {
+  width: 50px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+.not-reached {
+  background: fixed linear-gradient(to bottom, #de8c3c, #695140) center
     no-repeat;
   background-size: cover;
-}
-main {
-  margin: 20px;
+  margin: -8px;
+  padding-bottom: 100lvh;
+  height: 100%;
+  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-}
-
-.leaf {
-  width: 50px;
-  height: 50px;
-  position: absolute;
-}
-
-.content {
-  margin: 30px auto;
-  border: whitesmoke 2px solid;
-  padding: 20px;
-  border-radius: 40px;
-  width: 80%;
-  text-align: center;
-  z-index: 99;
-  background-color: rgba(0, 0, 0, .3);
-  backdrop-filter: blur(8px);
-  color: whitesmoke;
-  #p1 {
-    margin-bottom: 100px;
-  }
-  img {
+  .leaf {
     width: 50px;
-    margin-bottom: 50px;
+    height: 50px;
+    position: absolute;
   }
-  #answer {
-    background-color: rgba(255, 255, 255, .5);
-    width: fit-content;
-    padding: 10px;
-    margin: 0 auto;
-    color: black;
-    border-radius: 30px;
-  }
-  .multiple {
+
+  .content {
+    margin: 30px auto;
+    border: whitesmoke 2px solid;
+    padding: 20px;
+    border-radius: 40px;
+    width: 80%;
+    text-align: center;
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    color: whitesmoke;
+
     #answer {
-      margin: 0;
+      background-color: rgba(255, 255, 255, 0.5);
+      width: fit-content;
+      padding: 10px;
+      margin: 0 auto;
+      color: black;
+      border-radius: 30px;
     }
+    .multiple {
+      #answer {
+        margin: 0;
+      }
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+}
+
+.reached {
+  background-image: radial-gradient(
+    circle,
+    #e9dbce,
+    #807de4,
+    #695ab5,
+    #1492e9,
+    #014fd7,
+    #08339b
+  );
+  margin: -8px;
+  padding: 20px;
+  padding-bottom: 100lvh;
+  .content {
+    border: 2px whitesmoke solid;
+    color: whitesmoke;
+    width: 80%;
+    padding: 15px;
+    border-radius: 40px;
+    margin: auto;
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    code {
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      border-radius: 20px;
+      transition: 0.5s;
+    }
+    code:hover {
+      box-shadow: 0 0 10px whitesmoke;
+    }
+    input[type="text"],
+    input[type="password"] {
+      background-color: transparent;
+      border: 2px solid whitesmoke;
+      border-radius: 20px;
+      padding: 10px;
+      color: whitesmoke;
+    }
+    button {
+      padding: 10px;
+      border-radius: 20px;
+      background-color: transparent;
+      border: 2px whitesmoke solid;
+      color: whitesmoke;
+      margin-top: 10px;
+      transition: 0.5s;
+    }
   }
 }
