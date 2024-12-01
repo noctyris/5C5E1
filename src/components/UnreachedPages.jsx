@@ -60,6 +60,9 @@ function UnreachedPage(props) {
     </div>,
     <div className="content">
       <h3>Tant pis...</h3>
+      <p id="answer" onClick={() => window.close()}>
+        ✕
+      </p>
     </div>,
   ];
 

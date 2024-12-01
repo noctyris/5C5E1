@@ -154,7 +154,7 @@ function App() {
       </div>
     </div>,
     <div className="content">
-      <h1>Mon message</h1>
+      <h2>Mon message</h2>
       <p>
         Tu es quelqu'un de très spécial pour moi.
         <br />
@@ -167,7 +167,25 @@ function App() {
         )}{" "}
         jours que je t'aime
       </p>
-      
+      <p>J'espère que c'est réciporque</p>
+      <div className="multiple">
+        <p id="answer" onClick={() => setPage(2)}>
+          Oui
+        </p>
+        <p id="answer" onClick={() => setPage(3)}>
+          Non
+        </p>
+      </div>
+    </div>,
+    <div className="content">
+      <h2>Merci !</h2>
+      <p>Merci beaucoup !!</p>
+      <p id="answer" onClick={() => window.close()}>✕</p>
+    </div>,
+    <div className="content">
+      <h2>Mince !</h2>
+      <p>Je comprends, merci quand même d'avoir joué le jeu</p>
+      <p id="answer" onClick={() => window.close()}>✕</p>
     </div>,
   ];
 
