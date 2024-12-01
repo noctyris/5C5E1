@@ -180,12 +180,18 @@ function App() {
     <div className="content">
       <h2>Merci !</h2>
       <p>Merci beaucoup !!</p>
-      <p id="answer" onClick={() => window.close()}>✕</p>
+      <p id="answer" onClick={() => window.close()}>
+        ✕
+      </p>
     </div>,
     <div className="content">
       <h2>Mince !</h2>
       <p>Je comprends, merci quand même d'avoir joué le jeu</p>
-      <p id="answer" onClick={() => window.close()}>✕</p>
+      <p>J'espère qu'on restera amis</p>
+      <p>Et n'en parles pas trop s'il te plaît, j'en aurais un peu honte</p>
+      <p id="answer" onClick={() => window.close()}>
+        ✕
+      </p>
     </div>,
   ];
 
