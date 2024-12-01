@@ -1,7 +1,7 @@
 html {
   height: 100%;
   font-family: "Montserrat", sans-serif;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 body {
   padding: 0;
@@ -84,6 +84,9 @@ img {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(8px);
+    p {
+      line-height: 2rem;
+    }
     code {
       background-color: rgba(0, 0, 0, 0.3);
       padding: 10px;
@@ -93,9 +96,10 @@ img {
     code:hover {
       box-shadow: 0 0 10px whitesmoke;
     }
-    input[type="text"],
-    input[type="password"] {
+    #password {
       background-color: transparent;
+      width: 100px;
+      height: 1rem;
       border: 2px solid whitesmoke;
       border-radius: 20px;
       padding: 10px;
@@ -109,6 +113,30 @@ img {
       color: whitesmoke;
       margin-top: 10px;
       transition: 0.5s;
+    }
+    .numpad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 50px);
+      justify-content: center;
+      align-items: center;
+      grid-gap: 10px;
+      grid-auto-rows: minmax(1rem, auto);
+      p {
+        border: 2px whitesmoke solid;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        line-height: normal;
+        border-radius: 30px;
+      }
+      img {
+        margin: 0 0 0 0;
+        border: 2px whitesmoke solid;
+        padding: 11px 5px 11px 5px;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 30px;
+        width: 20px;
+      }
     }
   }
 }

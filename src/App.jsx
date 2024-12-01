@@ -12,7 +12,7 @@ function App() {
   const [isReached, setReached] = useState(false);
   const [passwordValue, setPasswordValue] = useState("");
 
-  const PASSWORD = "cUt3qsqJ";
+  const PASSWORD = "170430";
 
   const COLORS = [
     "#631601",
@@ -63,7 +63,7 @@ function App() {
   }, []);
 
   function copy() {
-    navigator.clipboard.writeText("Y1V0M3FzcUo=");
+    navigator.clipboard.writeText("0x313730343330");
     alert("Copié");
   }
 
@@ -76,19 +76,99 @@ function App() {
       <h3>Pour accéder au site, trouve le mot de passe :</h3>
       <p>Crypté: </p>
       <p onClick={() => copy()}>
-        <code>Y1V0M3FzcUo=</code>
+        <code>0x313730343330</code>
       </p>
-      <img src="/arrow-down.png" />
-        <input
-          type="password"
-          id="password"
-          value={passwordValue}
-          onChange={handleChange}
-          style={{boxShadow: (passwordValue === PASSWORD) ? "0 0 30px #00ff00" : "none"}}
+      <p id="password">{passwordValue}</p>
+      <div className="numpad">
+        <p
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "1")}
+        >
+          1
+        </p>
+        <p
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "2")}
+        >
+          2
+        </p>
+        <p
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "3")}
+        >
+          3
+        </p>
+        <p
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "4")}
+        >
+          4
+        </p>
+        <p
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "5")}
+        >
+          5
+        </p>
+        <p
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "6")}
+        >
+          6
+        </p>
+        <p
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "7")}
+        >
+          7
+        </p>
+        <p
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "8")}
+        >
+          8
+        </p>
+        <p
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "9")}
+        >
+          9
+        </p>
+        {passwordValue === PASSWORD ? (
+          <img src="/validate.png" onClick={() => setPage(1)} className="num" />
+        ) : (
+          ""
+        )}
+        <p
+          style={{ gridColumn: "2" }}
+          className="num"
+          onClick={() => setPasswordValue(passwordValue + "0")}
+        >
+          0
+        </p>
+        <img
+          src="/backspace.png"
+          onClick={() => setPasswordValue(passwordValue.slice(0, -1))}
+          className="num"
         />
-      {(passwordValue === PASSWORD) ? <button onClick={() => setPage(1)}>Go</button> : ""}
+      </div>
     </div>,
-    <div className="content">Hello</div>
+    <div className="content">
+      <h1>Mon message</h1>
+      <p>
+        Tu es quelqu'un de très spécial pour moi.
+        <br />
+        J'espère que tu ressens la même chose.
+      </p>
+      <p>
+        En clair, ça fait{" "}
+        {Math.floor(
+          (new Date() - new Date("2023-09-04")) / 1000 / 60 / 60 / 24
+        )}{" "}
+        jours que je t'aime
+      </p>
+      
+    </div>,
   ];
 
   return !isReached ? (
