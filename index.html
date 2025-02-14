@@ -1,17 +1,135 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>.</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracer d’une fonction</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #1e1e1e;
+      color: #ffffff;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 24px;
+      color: #00b4d8;
+    }
+    p {
+      font-size: 18px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      background-color: #0077b6;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #023e8a;
+    }
+    canvas {
+      border: 2px solid #00b4d8;
+      margin-top: 20px;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 8px;
+      border: 1px solid #555;
+      display: none; /* Masqué au chargement */
+    }
+  </style>
+</head>
+<body>
+  <h1>Tracer la fonction</h1>
+  <p>\( \sin(x \cdot 200 \cdot \pi^3) \cdot \sqrt{\frac{e^2 - x^2}{2}} + \sqrt{|x|} \)</p>
+  <button onclick="traceFunction()">Go !</button><br>
+  <canvas id="graphCanvas" width="500" height="300"></canvas>
+  
+  <div id="output">
+    <p>Je savais pas comment te le dire, mais voilà : je suis amoureux de toi</p>
+    <p>J’ai des risques de me taper un râteau mais tant pis.</p>
+    <p>Et ça dure depuis que je t’ai vu…</p>
+    <p>Il y a <span id="timeElapsed"></span> secondes.</p>
+  </div>
+
+  <script>
+    let intervalId;
+
+    function traceFunction() {
+      const canvas = document.getElementById('graphCanvas');
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      const centerX = width / 2;
+      const centerY = height / 2;
+
+      // Efface l'ancien dessin
+      ctx.clearRect(0, 0, width, height);
+
+      // Paramètres pour l'échelle du graphique
+      const step = 0.01; // Pas de calcul
+      const scaleX = 30; // Échelle pour l'axe X
+      const scaleY = 30; // Échelle pour l'axe Y
+
+      // Trace l'axe des X et des Y
+      ctx.beginPath();
+      ctx.moveTo(0, centerY);
+      ctx.lineTo(width, centerY);
+      ctx.moveTo(centerX, 0);
+      ctx.lineTo(centerX, height);
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke();
+
+      // Trace la fonction
+      ctx.beginPath();
+      for (let x = -width / (2 * scaleX); x <= width / (2 * scaleX); x += step) {
+        const y = Math.sin(x * 200 * Math.PI ** 3) * Math.sqrt((Math.E ** 2 - x ** 2) / 2) + Math.sqrt(Math.abs(x));
+        const plotX = centerX + x * scaleX;
+        const plotY = centerY - y * scaleY;
+
+        if (x === -width / (2 * scaleX)) {
+          ctx.moveTo(plotX, plotY);
+        } else {
+          ctx.lineTo(plotX, plotY);
+        }
+      }
+      ctx.strokeStyle = '#ff5733';
+      ctx.stroke();
+
+      // Affiche la zone de texte après 1 seconde
+      setTimeout(() => {
+        document.getElementById('output').style.display = 'block';
+        updateTimeElapsed();
+      }, 1000);
+    }
+
+    // Fonction pour calculer le temps écoulé depuis le 4 septembre 2023
+    function updateTimeElapsed() {
+      const startDate = new Date('2023-09-04T00:00:00Z');
+
+      // Arrête tout ancien intervalle
+      clearInterval(intervalId);
+
+      // Met à jour toutes les 10 millisecondes
+      intervalId = setInterval(() => {
+        const currentDate = new Date();
+        const elapsedMilliseconds = currentDate - startDate;
+        const elapsedSeconds = (elapsedMilliseconds / 1000).toFixed(2); // Conversion en secondes avec deux décimales
+        document.getElementById('timeElapsed').textContent = elapsedSeconds;
+      }, 10);
+    }
+  </script>
+</body>
 </html>
